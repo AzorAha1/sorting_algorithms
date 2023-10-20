@@ -9,12 +9,14 @@
 
 void bubble_sort(int *array, size_t size)
 {
-	size_t i, j;
+	size_t i;
 	int store;
 	int swapped;
 
 	for (i = 0; i < size - 1; i++)
 	{
+		size_t j;
+
 		swapped = 0;
 		for (j = 0; j < size - 1; j++)
 		{
