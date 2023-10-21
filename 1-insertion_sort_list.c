@@ -17,6 +17,17 @@ void insertion_sort_list(listint_t **list)
 		previous = current->prev;
 		while (previous != NULL && previous->n > current->n)
 		{
+			/**
+			 * setting previous node of current->next to address of previous
+			 * because if current->next is null then no need to reconnect nodes well
+			 * next set the next part of previous to current->next
+			 * because we are rearranging the nodes
+			 * next set current->prev to previous->prev
+			 * set current next address which will be previous
+			 * check if current->prev is not NULL
+			 * this check if current is the last node or not if it is:
+			 * then set current->prev->next to current else set it to list(head)
+			*/
 			if (current->next)
 				current->next->prev = previous;
 			previous->next = current->next;
