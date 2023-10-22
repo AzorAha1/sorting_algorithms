@@ -18,10 +18,11 @@ void swap(int *a, int *b)
  * @array: The array to be sorted
  * @high: the high index
  * @low: the low index
+ * @size: size of array
  *
  * Return: The pivot index
  */
-size_t lom_partition(int *array, ssize_t low, ssize_t high)
+size_t lom_partition(int *array, size_t size, ssize_t low, ssize_t high)
 {
 	int pivot;
 	ssize_t i, j;
@@ -32,11 +33,13 @@ size_t lom_partition(int *array, ssize_t low, ssize_t high)
 		if (array[j] < pivot)
 		{
 			swap(&array[i], &array[j]);
+			print_array(array, size);
 			i++;
 		}
 	}
 
 	swap(&array[i], &array[high]);
+	print_array(array, size);
 	return (i);
 }
 
@@ -45,18 +48,19 @@ size_t lom_partition(int *array, ssize_t low, ssize_t high)
  * @array: the array to be sorted
  * @low: low index
  * @high: high index
+ * @size: size of array
  */
 
-void quicksort(int *array, ssize_t low, ssize_t high)
+void quicksort(int *array, size_t size, ssize_t low, ssize_t high)
 {
 	size_t p;
 
 	if (low < high)
 	{
-		p = lom_partition(array, low, high);
+		p = lom_partition(array, size, low, high);
 
-		quicksort(array, low, p - 1);
-		quicksort(array, p + 1, high);
+		quicksort(array, size, low, p - 1);
+		quicksort(array, size, p + 1, high);
 	}
 }
 
@@ -70,5 +74,5 @@ void quick_sort(int *array, size_t size)
 {
 	if (!array || size < 2)
 		return;
-	quicksort(array, 0, size - 1);
+	quicksort(array, 0, size, size - 1);
 }
