@@ -4,39 +4,40 @@
  * swap - swaps elements in an array
  * @a: The element to swap
  * @b: The element to swap
- * @size: The size of the array
  */
-void swap(int *array, size_t size, int *a, int *b)
+void swap(int *a, int *b)
 {
-	if (*a != *b)
-	{
-		*a = *a + *b;
-		*b = *b - *a;
-		*a = *a - *b;
-		print_array((const int *)array, size);
-	}
+	int temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
 /**
  * lom_partition - Prints the lomuto partition scheme
  * @array: The array to be sorted
  * @high: the high index
  * @low: the low index
- * @size: the size of the array
  *
  * Return: The pivot index
  */
-size_t lom_partition(int *array, size_t size, ssize_t low, ssize_t high)
+size_t lom_partition(int *array, ssize_t low, ssize_t high)
 {
-	int i, j, pivot;
+	int pivot;
+	ssize_t i, j;
 
 	pivot = array[high];
 	for (i = j = low; j < high; j++)
+	{
 		if (array[j] < pivot)
-			swap(array, size, &array[j], &array[i++]);
+		{
+			swap(&array[i], &array[j]);
+			i++;
+		}
+	}
 
-	swap(array, size, &array[i], &array[high]);
+	swap(&array[i], &array[high]);
 	return (i);
-
 }
 
 /**
@@ -44,19 +45,18 @@ size_t lom_partition(int *array, size_t size, ssize_t low, ssize_t high)
  * @array: the array to be sorted
  * @low: low index
  * @high: high index
- * @size: The size of the arrat
  */
 
-void quicksort(int *array, size_t size, ssize_t low, ssize_t high)
+void quicksort(int *array, ssize_t low, ssize_t high)
 {
 	size_t p;
 
 	if (low < high)
 	{
-		p = lom_partition(array, size, low, high);
+		p = lom_partition(array, low, high);
 
-		quicksort(array, size, low, p - 1);
-		quicksort(array, size, p + 1, high);
+		quicksort(array, low, p - 1);
+		quicksort(array, p + 1, high);
 	}
 }
 
@@ -68,7 +68,7 @@ void quicksort(int *array, size_t size, ssize_t low, ssize_t high)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
-	quicksort(array, size, 0, size - 1);
+	quicksort(array, 0, size - 1);
 }
